@@ -1,0 +1,22 @@
+{
+  "name": "leadvertex/component-address",
+  "description": "LeadVertex address component",
+  "type": "library",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Timur Kasumov aka XAKEPEHOK",
+      "email": "support@leadvertex.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.4.0",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Leadvertex\\Components\\Address\\": "src/"
+    }
+  }
+}
