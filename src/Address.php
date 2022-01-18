@@ -9,13 +9,13 @@ namespace Leadvertex\Components\Address;
 
 
 use JsonSerializable;
+use Leadvertex\Components\Address\Exceptions\InvalidAddressCountryException;
+use Symfony\Component\Intl\Countries;
 
 class Address implements JsonSerializable
 {
 
     private string $postcode = '';
-
-    private string $country = '';
 
     private string $region = '';
 
@@ -25,24 +25,31 @@ class Address implements JsonSerializable
 
     private string $address_2 = '';
 
+    private ?string $countryCode = null;
+
     private ?Location $location = null;
 
+    /**
+     * @throws InvalidAddressCountryException
+     */
     public function __construct(
-        string $country,
-        string $region,
-        string $city,
-        string $address_1,
-        string $address_2 = '',
-        string $postcode = '',
+        string   $region,
+        string   $city,
+        string   $address_1,
+        string   $address_2 = '',
+        string   $postcode = '',
+        string   $countryCode = null,
         Location $location = null
     )
     {
         $this->postcode = $postcode;
-        $this->country = $country;
         $this->region = $region;
         $this->city = $city;
         $this->address_1 = $address_1;
         $this->address_2 = $address_2;
+
+        $this->guardCountryCode($countryCode);
+        $this->countryCode = $countryCode;
         $this->location = $location;
     }
 
@@ -55,18 +62,6 @@ class Address implements JsonSerializable
     {
         $clone = clone $this;
         $clone->postcode = trim($postcode);
-        return $clone;
-    }
-
-    public function getCountry(): string
-    {
-        return $this->country;
-    }
-
-    public function setCountry(string $country): self
-    {
-        $clone = clone $this;
-        $clone->country = $country;
         return $clone;
     }
 
@@ -119,6 +114,28 @@ class Address implements JsonSerializable
         return $clone;
     }
 
+    public function getCountryCode(): ?string
+    {
+        return $this->countryCode;
+    }
+
+    /**
+     * @param string|null $code
+     * @return $this
+     * @throws InvalidAddressCountryException
+     */
+    public function setCountryCode(?string $code): self
+    {
+        if (!is_null($code)) {
+            $code = strtoupper($code);
+        }
+
+        $this->guardCountryCode($code);
+        $clone = clone $this;
+        $clone->countryCode = $code;
+        return $clone;
+    }
+
     public function getLocation(): ?Location
     {
         return $this->location;
@@ -134,8 +151,8 @@ class Address implements JsonSerializable
     public function __toString(): string
     {
         return implode(', ', [
+            $this->countryCode,
             $this->postcode,
-            $this->country,
             $this->region,
             $this->city,
             $this->address_1,
@@ -147,12 +164,24 @@ class Address implements JsonSerializable
     {
         return [
             'postcode' => $this->postcode,
-            'country' => $this->country,
             'region' => $this->region,
             'city' => $this->city,
             'address_1' => $this->address_1,
             'address_2' => $this->address_2,
+            'countryCode' => $this->countryCode,
             'location' => $this->location
         ];
+    }
+
+    /**
+     * @param string|null $code
+     * @return void
+     * @throws InvalidAddressCountryException
+     */
+    private function guardCountryCode(?string $code): void
+    {
+        if ($code !== null && !Countries::exists($code)) {
+            throw new InvalidAddressCountryException("Invalid country code '{$code}'. Country code should be in ISO 3166-1 alpha-2");
+        }
     }
 }

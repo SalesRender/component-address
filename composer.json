@@ -12,7 +12,8 @@
   ],
   "require": {
     "php": ">=7.4.0",
-    "ext-json": "*"
+    "ext-json": "*",
+    "symfony/intl": "^5.4"
   },
   "autoload": {
     "psr-4": {

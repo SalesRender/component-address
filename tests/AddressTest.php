@@ -7,17 +7,18 @@
 
 namespace Leadvertex\Components\Address;
 
+use Leadvertex\Components\Address\Exceptions\InvalidAddressCountryException;
 use PHPUnit\Framework\TestCase;
 
 class AddressTest extends TestCase
 {
 
     private string $postcode;
-    private string $country;
     private string $region;
     private string $city;
     private string $address_1;
     private string $address_2;
+    private string $countryCode;
     private Location $location;
 
     private Address $address;
@@ -26,7 +27,7 @@ class AddressTest extends TestCase
     {
         parent::setUp();
         $this->postcode = '127427';
-        $this->country = 'Russia';
+        $this->countryCode = 'RU';
         $this->region = 'Moscow';
         $this->city = 'Moscow';
         $this->address_1 = 'Academika Koroleva street, 12';
@@ -34,12 +35,12 @@ class AddressTest extends TestCase
         $this->location = new Location(55.82290159033269, 37.60623969325991);
 
         $this->address = new Address(
-            $this->country,
             $this->region,
             $this->city,
             $this->address_1,
             $this->address_2,
             $this->postcode,
+            $this->countryCode,
             $this->location
         );
     }
@@ -56,12 +57,15 @@ class AddressTest extends TestCase
 
     public function testGetSetCountry(): void
     {
-        $this->assertSame($this->country, $this->address->getCountry());
-        $value = '';
-        $updated = $this->address->setCountry($value);
+        $this->assertSame($this->countryCode, $this->address->getCountryCode());
+        $value = null;
+        $updated = $this->address->setCountryCode($value);
         $this->assertNotSame($this->address, $updated);
-        $this->assertSame($value, $updated->getCountry());
-        $this->assertSame($this->country, $this->address->getCountry());
+        $this->assertSame($value, $updated->getCountryCode());
+        $this->assertSame($this->countryCode, $this->address->getCountryCode());
+
+        $this->expectException(InvalidAddressCountryException::class);
+        $this->address->setCountryCode('QWERTY');
     }
 
     public function testGetSetRegion(): void
@@ -119,11 +123,11 @@ class AddressTest extends TestCase
 
         $this->assertSame(json_encode([
             'postcode' => $this->postcode,
-            'country' => $this->country,
             'region' => $this->region,
             'city' => $this->city,
             'address_1' => $this->address_1,
             'address_2' => $this->address_2,
+            'countryCode' => $this->countryCode,
             'location' => [
                 'longitude' => $this->location->getLongitude(),
                 'latitude' => $this->location->getLatitude(),
@@ -134,7 +138,7 @@ class AddressTest extends TestCase
     public function testToString(): void
     {
         $this->assertSame(
-            '127427, Russia, Moscow, Moscow, Academika Koroleva street, 12, office 2',
+            'RU, 127427, Moscow, Moscow, Academika Koroleva street, 12, office 2',
             (string) $this->address
         );
     }
