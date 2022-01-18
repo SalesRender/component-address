@@ -1,4 +1,4 @@
-# Address DTO object
+# Address DTO object [![Build Status](https://travis-ci.org/leadvertex/component-address.svg?branch=master)](https://travis-ci.org/leadvertex/address)
 
 ## Installation
 ```

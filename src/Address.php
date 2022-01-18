@@ -15,6 +15,8 @@ class Address implements JsonSerializable
 
     private string $postcode = '';
 
+    private string $country = '';
+
     private string $region = '';
 
     private string $city = '';
@@ -23,19 +25,25 @@ class Address implements JsonSerializable
 
     private string $address_2 = '';
 
+    private ?Location $location = null;
+
     public function __construct(
+        string $country,
         string $region,
         string $city,
         string $address_1,
         string $address_2 = '',
-        string $postcode = ''
+        string $postcode = '',
+        Location $location = null
     )
     {
+        $this->postcode = $postcode;
+        $this->country = $country;
         $this->region = $region;
         $this->city = $city;
         $this->address_1 = $address_1;
         $this->address_2 = $address_2;
-        $this->postcode = $postcode;
+        $this->location = $location;
     }
 
     public function getPostcode(): string
@@ -43,9 +51,23 @@ class Address implements JsonSerializable
         return $this->postcode;
     }
 
-    public function setPostcode(string $postcode): void
+    public function setPostcode(string $postcode): self
     {
-        $this->postcode = trim($postcode);
+        $clone = clone $this;
+        $clone->postcode = trim($postcode);
+        return $clone;
+    }
+
+    public function getCountry(): string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(string $country): self
+    {
+        $clone = clone $this;
+        $clone->country = $country;
+        return $clone;
     }
 
     public function getRegion(): string
@@ -53,9 +75,11 @@ class Address implements JsonSerializable
         return $this->region;
     }
 
-    public function setRegion(string $region): void
+    public function setRegion(string $region): self
     {
-        $this->region = trim($region);
+        $clone = clone $this;
+        $clone->region = trim($region);
+        return $clone;
     }
 
     public function getCity(): string
@@ -63,9 +87,11 @@ class Address implements JsonSerializable
         return $this->city;
     }
 
-    public function setCity(string $city): void
+    public function setCity(string $city): self
     {
-        $this->city = trim($city);
+        $clone = clone $this;
+        $clone->city = trim($city);
+        return $clone;
     }
 
     public function getAddress_1(): string
@@ -73,9 +99,11 @@ class Address implements JsonSerializable
         return $this->address_1;
     }
 
-    public function setAddress_1(string $address_1): void
+    public function setAddress_1(string $address_1): self
     {
-        $this->address_1 = trim($address_1);
+        $clone = clone $this;
+        $clone->address_1 = trim($address_1);
+        return $clone;
     }
 
     public function getAddress_2(): string
@@ -84,15 +112,30 @@ class Address implements JsonSerializable
     }
 
 
-    public function setAddress_2(string $address_2): void
+    public function setAddress_2(string $address_2): self
     {
-        $this->address_2 = trim($address_2);
+        $clone = clone $this;
+        $clone->address_2 = trim($address_2);
+        return $clone;
+    }
+
+    public function getLocation(): ?Location
+    {
+        return $this->location;
+    }
+
+    public function setLocation(?Location $location): self
+    {
+        $clone = clone $this;
+        $clone->location = $location;
+        return $clone;
     }
 
     public function __toString(): string
     {
         return implode(', ', [
             $this->postcode,
+            $this->country,
             $this->region,
             $this->city,
             $this->address_1,
@@ -104,10 +147,12 @@ class Address implements JsonSerializable
     {
         return [
             'postcode' => $this->postcode,
+            'country' => $this->country,
             'region' => $this->region,
             'city' => $this->city,
             'address_1' => $this->address_1,
-            'address_2' => $this->address_2
+            'address_2' => $this->address_2,
+            'location' => $this->location
         ];
     }
 }
