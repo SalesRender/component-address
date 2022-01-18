@@ -8,22 +8,33 @@
 namespace Leadvertex\Components\Address;
 
 use JsonSerializable;
+use Leadvertex\Components\Address\Exceptions\InvalidLocationLatitudeException;
+use Leadvertex\Components\Address\Exceptions\InvalidLocationLongitudeException;
 
 class Location implements JsonSerializable
 {
 
-    private float $longitude;
     private float $latitude;
+    private float $longitude;
 
-    public function __construct(float $longitude, float $latitude)
+    /**
+     * @param float $latitude
+     * @param float $longitude
+     * @throws InvalidLocationLatitudeException
+     * @throws InvalidLocationLongitudeException
+     */
+    public function __construct(float $latitude, float $longitude)
     {
-        $this->longitude = $longitude;
+        if ($latitude < -90 || $latitude > 90) {
+            throw new InvalidLocationLatitudeException('Latitude value should be between -90 and 90');
+        }
+
+        if ($longitude < -180 || $longitude > 180) {
+            throw new InvalidLocationLongitudeException('Longitude value should be between -180 and 180');
+        }
+
         $this->latitude = $latitude;
-    }
-
-    public function getLongitude(): float
-    {
-        return $this->longitude;
+        $this->longitude = $longitude;
     }
 
     public function getLatitude(): float
@@ -31,11 +42,16 @@ class Location implements JsonSerializable
         return $this->latitude;
     }
 
+    public function getLongitude(): float
+    {
+        return $this->longitude;
+    }
+
     public function jsonSerialize(): array
     {
         return [
-            'longitude' => $this->longitude,
             'latitude' => $this->latitude,
+            'longitude' => $this->longitude,
         ];
     }
 }

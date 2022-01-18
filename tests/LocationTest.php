@@ -7,26 +7,48 @@
 
 namespace Leadvertex\Components\Address;
 
+use Leadvertex\Components\Address\Exceptions\InvalidLocationLatitudeException;
+use Leadvertex\Components\Address\Exceptions\InvalidLocationLongitudeException;
 use PHPUnit\Framework\TestCase;
 
 class LocationTest extends TestCase
 {
 
     private Location $location;
-    private float $longitude;
     private float $latitude;
+    private float $longitude;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->longitude = 55.82290159033269;
         $this->latitude = 37.60623969325991;
-        $this->location = new Location($this->longitude, $this->latitude);
+        $this->longitude = 55.82290159033269;
+        $this->location = new Location($this->latitude, $this->longitude);
     }
 
-    public function testGetLongitude(): void
+    public function invalidDataProvider(): array
     {
-        $this->assertSame($this->longitude, $this->location->getLongitude());
+        return [
+            [-90.1, 45, InvalidLocationLatitudeException::class],
+            [90.1, 45, InvalidLocationLatitudeException::class],
+            [45, -180.1, InvalidLocationLongitudeException::class],
+            [45, 180.1, InvalidLocationLongitudeException::class],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidDataProvider
+     * @param float $lat
+     * @param float $lon
+     * @param string $exception
+     * @return void
+     * @throws InvalidLocationLatitudeException
+     * @throws InvalidLocationLongitudeException
+     */
+    public function testConstructWithInvalidData(float $lat, float $lon, string $exception): void
+    {
+        $this->expectException($exception);
+        new Location($lat, $lon);
     }
 
     public function testGetLatitude(): void
@@ -34,12 +56,17 @@ class LocationTest extends TestCase
         $this->assertSame($this->latitude, $this->location->getLatitude());
     }
 
+    public function testGetLongitude(): void
+    {
+        $this->assertSame($this->longitude, $this->location->getLongitude());
+    }
+
     public function testJsonSerialize(): void
     {
         $this->assertSame(
             json_encode([
-                'longitude' => $this->longitude,
                 'latitude' => $this->latitude,
+                'longitude' => $this->longitude,
             ]),
             json_encode($this->location)
         );

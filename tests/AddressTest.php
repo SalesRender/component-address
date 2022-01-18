@@ -129,8 +129,8 @@ class AddressTest extends TestCase
             'address_2' => $this->address_2,
             'countryCode' => $this->countryCode,
             'location' => [
-                'longitude' => $this->location->getLongitude(),
                 'latitude' => $this->location->getLatitude(),
+                'longitude' => $this->location->getLongitude(),
             ]
         ]), json_encode($this->address));
     }
