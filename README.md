@@ -7,3 +7,11 @@ composer require leadvertex/component-address
 
 ## Usage
 Usage is very simple, [just see source](src/Address.php)
+
+## Local usage
+
+```shell
+cp APP_DIR/tests/docker-compose.yml APP_DIR/docker-compose.yml
+docker compose up -d
+docker compose exec php composer install
+```
