@@ -18,6 +18,8 @@ class AddressTest extends TestCase
     private string $city;
     private string $address_1;
     private string $address_2;
+    private string $building;
+    private string $apartment;
     private string $countryCode;
     private Location $location;
 
@@ -32,6 +34,8 @@ class AddressTest extends TestCase
         $this->city = 'Moscow';
         $this->address_1 = 'Academika Koroleva street, 12';
         $this->address_2 = 'office 2';
+        $this->building = '3/1';
+        $this->apartment = '555';
         $this->location = new Location(55.82290159033269, 37.60623969325991);
 
         $this->address = new Address(
@@ -39,6 +43,8 @@ class AddressTest extends TestCase
             $this->city,
             $this->address_1,
             $this->address_2,
+            $this->building,
+            $this->apartment,
             $this->postcode,
             $this->countryCode,
             $this->location
@@ -108,6 +114,26 @@ class AddressTest extends TestCase
         $this->assertSame($this->address_2, $this->address->getAddress_2());
     }
 
+    public function testGetSetBuilding(): void
+    {
+        $this->assertSame($this->building, $this->address->getBuilding());
+        $value = '';
+        $updated = $this->address->setBuilding($value);
+        $this->assertNotSame($this->address, $updated);
+        $this->assertSame($value, $updated->getBuilding());
+        $this->assertSame($this->building, $this->address->getBuilding());
+    }
+
+    public function testGetSetApartment(): void
+    {
+        $this->assertSame($this->apartment, $this->address->getApartment());
+        $value = '';
+        $updated = $this->address->setApartment($value);
+        $this->assertNotSame($this->address, $updated);
+        $this->assertSame($value, $updated->getApartment());
+        $this->assertSame($this->apartment, $this->address->getApartment());
+    }
+
     public function testGetSetLocation(): void
     {
         $this->assertSame($this->location, $this->address->getLocation());
@@ -127,6 +153,8 @@ class AddressTest extends TestCase
             'city' => $this->city,
             'address_1' => $this->address_1,
             'address_2' => $this->address_2,
+            'building' => $this->building,
+            'apartment' => $this->apartment,
             'countryCode' => $this->countryCode,
             'location' => [
                 'latitude' => $this->location->getLatitude(),
@@ -138,7 +166,7 @@ class AddressTest extends TestCase
     public function testToString(): void
     {
         $this->assertSame(
-            'RU, 127427, Moscow, Moscow, Academika Koroleva street, 12, office 2',
+            'RU, 127427, Moscow, Moscow, Academika Koroleva street, 12, office 2, 3/1, 555',
             (string) $this->address
         );
     }

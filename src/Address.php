@@ -7,7 +7,6 @@
 
 namespace Leadvertex\Components\Address;
 
-
 use JsonSerializable;
 use Leadvertex\Components\Address\Exceptions\InvalidAddressCountryException;
 use Symfony\Component\Intl\Countries;
@@ -25,6 +24,10 @@ class Address implements JsonSerializable
 
     private string $address_2 = '';
 
+    private string $building = '';
+
+    private string $apartment = '';
+
     private ?string $countryCode = null;
 
     private ?Location $location = null;
@@ -37,6 +40,8 @@ class Address implements JsonSerializable
         string   $city,
         string   $address_1,
         string   $address_2 = '',
+        string   $building = '',
+        string   $apartment = '',
         string   $postcode = '',
         string   $countryCode = null,
         Location $location = null
@@ -47,6 +52,8 @@ class Address implements JsonSerializable
         $this->city = $city;
         $this->address_1 = $address_1;
         $this->address_2 = $address_2;
+        $this->building = $building;
+        $this->apartment = $apartment;
 
         $this->guardCountryCode($countryCode);
         $this->countryCode = $countryCode;
@@ -114,6 +121,30 @@ class Address implements JsonSerializable
         return $clone;
     }
 
+    public function getBuilding(): string
+    {
+        return $this->building;
+    }
+
+    public function setBuilding(string $building): self
+    {
+        $clone = clone $this;
+        $clone->building = trim($building);
+        return $clone;
+    }
+
+    public function getApartment(): string
+    {
+        return $this->apartment;
+    }
+
+    public function setApartment(string $apartment): self
+    {
+        $clone = clone $this;
+        $clone->apartment = trim($apartment);
+        return $clone;
+    }
+
     public function getCountryCode(): ?string
     {
         return $this->countryCode;
@@ -156,7 +187,9 @@ class Address implements JsonSerializable
             $this->region,
             $this->city,
             $this->address_1,
-            $this->address_2
+            $this->address_2,
+            $this->building,
+            $this->apartment,
         ]);
     }
 
@@ -168,6 +201,8 @@ class Address implements JsonSerializable
             'city' => $this->city,
             'address_1' => $this->address_1,
             'address_2' => $this->address_2,
+            'building' => $this->building,
+            'apartment' => $this->apartment,
             'countryCode' => $this->countryCode,
             'location' => $this->location
         ];

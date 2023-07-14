@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: php
+    volumes:
+      - ./:/app
+    environment:
+      PHP_IDE_CONFIG: "serverName=component-address"
+      XDEBUG_CONFIG: "remote_host=host.docker.internal remote_enable=1 remote_autostart=1"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    working_dir: /app
+    tty: true
