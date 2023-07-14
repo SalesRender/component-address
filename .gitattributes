@@ -8,3 +8,4 @@ docker-compose.yml export-ignore
 .gitignore export-ignore
 .gitattributes export-ignore
 .travis.yml export-ignore
+Dockerfile export-ignore
