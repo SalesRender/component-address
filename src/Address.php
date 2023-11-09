@@ -5,10 +5,10 @@
  * @author Timur Kasumov aka XAKEPEHOK
  */
 
-namespace Leadvertex\Components\Address;
+namespace SalesRender\Components\Address;
 
 use JsonSerializable;
-use Leadvertex\Components\Address\Exceptions\InvalidAddressCountryException;
+use SalesRender\Components\Address\Exceptions\InvalidAddressCountryException;
 use Symfony\Component\Intl\Countries;
 
 class Address implements JsonSerializable

@@ -5,11 +5,11 @@
  * @author Timur Kasumov (XAKEPEHOK)
  */
 
-namespace Leadvertex\Components\Address;
+namespace SalesRender\Components\Address;
 
 use JsonSerializable;
-use Leadvertex\Components\Address\Exceptions\InvalidLocationLatitudeException;
-use Leadvertex\Components\Address\Exceptions\InvalidLocationLongitudeException;
+use SalesRender\Components\Address\Exceptions\InvalidLocationLatitudeException;
+use SalesRender\Components\Address\Exceptions\InvalidLocationLongitudeException;
 
 class Location implements JsonSerializable
 {

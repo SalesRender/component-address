@@ -5,9 +5,9 @@
  * @author Timur Kasumov (XAKEPEHOK)
  */
 
-namespace Leadvertex\Components\Address;
+namespace SalesRender\Components\Address;
 
-use Leadvertex\Components\Address\Exceptions\InvalidAddressCountryException;
+use SalesRender\Components\Address\Exceptions\InvalidAddressCountryException;
 use PHPUnit\Framework\TestCase;
 
 class AddressTest extends TestCase

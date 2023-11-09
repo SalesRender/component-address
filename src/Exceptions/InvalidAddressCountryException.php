@@ -5,7 +5,7 @@
  * @author Timur Kasumov (XAKEPEHOK)
  */
 
-namespace Leadvertex\Components\Address\Exceptions;
+namespace SalesRender\Components\Address\Exceptions;
 
 use Exception;
 
