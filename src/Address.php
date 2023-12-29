@@ -181,7 +181,7 @@ class Address implements JsonSerializable
 
     public function __toString(): string
     {
-        return implode(', ', [
+        $fields = [
             $this->countryCode,
             $this->postcode,
             $this->region,
@@ -190,7 +190,13 @@ class Address implements JsonSerializable
             $this->address_2,
             $this->building,
             $this->apartment,
-        ]);
+        ];
+        $nonEmptyFields = array_filter($fields);
+        if (empty($nonEmptyFields)) {
+            return '';
+        }
+
+        return implode(', ', $fields);
     }
 
     public function jsonSerialize(): array
