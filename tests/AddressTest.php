@@ -171,5 +171,14 @@ class AddressTest extends TestCase
         );
     }
 
+    public function testToStringEmpty(): void
+    {
+        $address = new Address('', '', '');
+        $this->assertSame(
+            '',
+            (string) $address
+        );
+    }
+
 
 }
