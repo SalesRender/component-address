@@ -1,6 +1,6 @@
 <?php
 /**
- * Created for LeadVertex 2.0.
+ * Created for SalesRender
  * Datetime: 03.10.2018 14:44
  * @author Timur Kasumov aka XAKEPEHOK
  */

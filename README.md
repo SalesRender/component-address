@@ -1,8 +1,8 @@
-# Address DTO object [![Build Status](https://travis-ci.org/leadvertex/component-address.svg?branch=master)](https://travis-ci.org/leadvertex/address)
+# Address DTO object [![Build Status](https://travis-ci.org/salesrender/component-address.svg?branch=master)](https://travis-ci.org/salesrender/address)
 
 ## Installation
 ```
-composer require leadvertex/component-address
+composer require salesrender/component-address
 ```
 
 ## Usage
