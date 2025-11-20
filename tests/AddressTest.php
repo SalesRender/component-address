@@ -22,6 +22,10 @@ class AddressTest extends TestCase
     private string $apartment;
     private string $countryCode;
     private Location $location;
+    private string $additional1;
+    private string $additional2;
+    private string $additional3;
+    private string $additional4;
 
     private Address $address;
 
@@ -37,6 +41,10 @@ class AddressTest extends TestCase
         $this->building = '3/1';
         $this->apartment = '555';
         $this->location = new Location(55.82290159033269, 37.60623969325991);
+        $this->additional1 = 'add #1';
+        $this->additional2 = 'add #2';
+        $this->additional3 = 'add #3';
+        $this->additional4 = 'add #4';
 
         $this->address = new Address(
             $this->region,
@@ -47,7 +55,11 @@ class AddressTest extends TestCase
             $this->apartment,
             $this->postcode,
             $this->countryCode,
-            $this->location
+            $this->location,
+            $this->additional1,
+            $this->additional2,
+            $this->additional3,
+            $this->additional4,
         );
     }
 
@@ -144,6 +156,46 @@ class AddressTest extends TestCase
         $this->assertSame($this->location, $this->address->getLocation());
     }
 
+    public function testGetSetAdditional1(): void
+    {
+        $this->assertSame($this->additional1, $this->address->getAdditional1());
+        $value = '';
+        $updated = $this->address->setAdditional1($value);
+        $this->assertNotSame($this->address, $updated);
+        $this->assertSame($value, $updated->getAdditional1());
+        $this->assertSame($this->additional1, $this->address->getAdditional1());
+    }
+
+    public function testGetSetAdditional2(): void
+    {
+        $this->assertSame($this->additional2, $this->address->getAdditional2());
+        $value = '';
+        $updated = $this->address->setAdditional2($value);
+        $this->assertNotSame($this->address, $updated);
+        $this->assertSame($value, $updated->getAdditional2());
+        $this->assertSame($this->additional2, $this->address->getAdditional2());
+    }
+
+    public function testGetSetAdditional3(): void
+    {
+        $this->assertSame($this->additional3, $this->address->getAdditional3());
+        $value = '';
+        $updated = $this->address->setAdditional3($value);
+        $this->assertNotSame($this->address, $updated);
+        $this->assertSame($value, $updated->getAdditional3());
+        $this->assertSame($this->additional3, $this->address->getAdditional3());
+    }
+
+    public function testGetSetAdditional4(): void
+    {
+        $this->assertSame($this->additional4, $this->address->getAdditional4());
+        $value = '';
+        $updated = $this->address->setAdditional4($value);
+        $this->assertNotSame($this->address, $updated);
+        $this->assertSame($value, $updated->getAdditional4());
+        $this->assertSame($this->additional4, $this->address->getAdditional4());
+    }
+
     public function testJsonSerialize(): void
     {
 
@@ -159,15 +211,19 @@ class AddressTest extends TestCase
             'location' => [
                 'latitude' => $this->location->getLatitude(),
                 'longitude' => $this->location->getLongitude(),
-            ]
+            ],
+            'additional1' => $this->additional1,
+            'additional2' => $this->additional2,
+            'additional3' => $this->additional3,
+            'additional4' => $this->additional4,
         ]), json_encode($this->address));
     }
 
     public function testToString(): void
     {
         $this->assertSame(
-            'RU, 127427, Moscow, Moscow, Academika Koroleva street, 12, office 2, 3/1, 555',
-            (string) $this->address
+            'RU, 127427, Moscow, Moscow, Academika Koroleva street, 12, office 2, 3/1, 555, add #1, add #2, add #3, add #4',
+            (string)$this->address
         );
     }
 
@@ -176,7 +232,7 @@ class AddressTest extends TestCase
         $address = new Address('', '', '');
         $this->assertSame(
             '',
-            (string) $address
+            (string)$address
         );
     }
 

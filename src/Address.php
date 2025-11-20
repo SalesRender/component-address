@@ -31,6 +31,10 @@ class Address implements JsonSerializable
     private ?string $countryCode = null;
 
     private ?Location $location = null;
+    private string $additional1 = '';
+    private string $additional2 = '';
+    private string $additional3 = '';
+    private string $additional4 = '';
 
     /**
      * @throws InvalidAddressCountryException
@@ -44,7 +48,11 @@ class Address implements JsonSerializable
         string   $apartment = '',
         string   $postcode = '',
         string   $countryCode = null,
-        Location $location = null
+        Location $location = null,
+        string   $additional1 = '',
+        string   $additional2 = '',
+        string   $additional3 = '',
+        string   $additional4 = ''
     )
     {
         $this->postcode = $postcode;
@@ -58,6 +66,11 @@ class Address implements JsonSerializable
         $this->guardCountryCode($countryCode);
         $this->countryCode = $countryCode;
         $this->location = $location;
+
+        $this->additional1 = $additional1;
+        $this->additional2 = $additional2;
+        $this->additional3 = $additional3;
+        $this->additional4 = $additional4;
     }
 
     public function getPostcode(): string
@@ -179,6 +192,54 @@ class Address implements JsonSerializable
         return $clone;
     }
 
+    public function getAdditional1(): string
+    {
+        return $this->additional1;
+    }
+
+    public function setAdditional1(string $additional1): self
+    {
+        $clone = clone $this;
+        $clone->additional1 = $additional1;
+        return $clone;
+    }
+
+    public function getAdditional2(): string
+    {
+        return $this->additional2;
+    }
+
+    public function setAdditional2(string $additional2): self
+    {
+        $clone = clone $this;
+        $clone->additional2 = $additional2;
+        return $clone;
+    }
+
+    public function getAdditional3(): string
+    {
+        return $this->additional3;
+    }
+
+    public function setAdditional3(string $additional3): self
+    {
+        $clone = clone $this;
+        $clone->additional3 = $additional3;
+        return $clone;
+    }
+
+    public function getAdditional4(): string
+    {
+        return $this->additional4;
+    }
+
+    public function setAdditional4(string $additional4): self
+    {
+        $clone = clone $this;
+        $clone->additional4 = $additional4;
+        return $clone;
+    }
+
     public function __toString(): string
     {
         $fields = [
@@ -190,6 +251,10 @@ class Address implements JsonSerializable
             $this->address_2,
             $this->building,
             $this->apartment,
+            $this->additional1,
+            $this->additional2,
+            $this->additional3,
+            $this->additional4,
         ];
         $nonEmptyFields = array_filter($fields);
         if (empty($nonEmptyFields)) {
@@ -210,7 +275,11 @@ class Address implements JsonSerializable
             'building' => $this->building,
             'apartment' => $this->apartment,
             'countryCode' => $this->countryCode,
-            'location' => $this->location
+            'location' => $this->location,
+            'additional1' => $this->additional1,
+            'additional2' => $this->additional2,
+            'additional3' => $this->additional3,
+            'additional4' => $this->additional4,
         ];
     }
 
