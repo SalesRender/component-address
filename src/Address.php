@@ -32,6 +32,12 @@ class Address implements JsonSerializable
 
     private ?Location $location = null;
 
+    private string $additional_1 = '';
+
+    private string $additional_2 = '';
+
+    private string $additional_3 = '';
+
     /**
      * @throws InvalidAddressCountryException
      */
@@ -179,6 +185,42 @@ class Address implements JsonSerializable
         return $clone;
     }
 
+    public function getAdditional_1(): string
+    {
+        return $this->additional_1;
+    }
+
+    public function setAdditional_1(string $additional_1): self
+    {
+        $clone = clone $this;
+        $clone->additional_1 = $additional_1;
+        return $clone;
+    }
+
+    public function getAdditional_2(): string
+    {
+        return $this->additional_2;
+    }
+
+    public function setAdditional_2(string $additional_2): self
+    {
+        $clone = clone $this;
+        $clone->additional_2 = $additional_2;
+        return $clone;
+    }
+
+    public function getAdditional_3(): string
+    {
+        return $this->additional_3;
+    }
+
+    public function setAdditional_3(string $additional_3): self
+    {
+        $clone = clone $this;
+        $clone->additional_3 = $additional_3;
+        return $clone;
+    }
+
     public function __toString(): string
     {
         $fields = [
@@ -190,13 +232,16 @@ class Address implements JsonSerializable
             $this->address_2,
             $this->building,
             $this->apartment,
+            $this->additional_1,
+            $this->additional_2,
+            $this->additional_3,
         ];
         $nonEmptyFields = array_filter($fields);
         if (empty($nonEmptyFields)) {
             return '';
         }
 
-        return implode(', ', $fields);
+        return implode(', ', $nonEmptyFields);
     }
 
     public function jsonSerialize(): array
@@ -210,7 +255,10 @@ class Address implements JsonSerializable
             'building' => $this->building,
             'apartment' => $this->apartment,
             'countryCode' => $this->countryCode,
-            'location' => $this->location
+            'location' => $this->location,
+            'additional_1' => $this->additional_1,
+            'additional_2' => $this->additional_2,
+            'additional_3' => $this->additional_3,
         ];
     }
 
