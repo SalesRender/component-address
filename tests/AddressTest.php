@@ -22,9 +22,9 @@ class AddressTest extends TestCase
     private string $apartment;
     private string $countryCode;
     private Location $location;
-    private string $additional_1;
-    private string $additional_2;
-    private string $additional_3;
+    private string $additional_1 = '';
+    private string $additional_2 = '';
+    private string $additional_3 = '';
 
     private Address $address;
 
@@ -40,9 +40,6 @@ class AddressTest extends TestCase
         $this->building = '3/1';
         $this->apartment = '555';
         $this->location = new Location(55.82290159033269, 37.60623969325991);
-        $this->additional_1 = 'add #1';
-        $this->additional_2 = 'add #2';
-        $this->additional_3 = 'add #3';
 
         $this->address = new Address(
             $this->region,
@@ -53,10 +50,7 @@ class AddressTest extends TestCase
             $this->apartment,
             $this->postcode,
             $this->countryCode,
-            $this->location,
-            $this->additional_1,
-            $this->additional_2,
-            $this->additional_3
+            $this->location
         );
     }
 
@@ -155,32 +149,32 @@ class AddressTest extends TestCase
 
     public function testGetSetAdditional_1(): void
     {
-        $this->assertSame($this->additional_1, $this->address->getAdditional_1());
-        $value = '';
+        $this->assertEmpty($this->address->getAdditional_1());
+
+        $value = 'add #1';
         $updated = $this->address->setAdditional_1($value);
         $this->assertNotSame($this->address, $updated);
         $this->assertSame($value, $updated->getAdditional_1());
-        $this->assertSame($this->additional_1, $this->address->getAdditional_1());
     }
 
     public function testGetSetAdditional_2(): void
     {
-        $this->assertSame($this->additional_2, $this->address->getAdditional_2());
-        $value = '';
+        $this->assertEmpty($this->address->getAdditional_2());
+
+        $value = 'add #2';
         $updated = $this->address->setAdditional_2($value);
         $this->assertNotSame($this->address, $updated);
         $this->assertSame($value, $updated->getAdditional_2());
-        $this->assertSame($this->additional_2, $this->address->getAdditional_2());
     }
 
     public function testGetSetAdditional_3(): void
     {
-        $this->assertSame($this->additional_3, $this->address->getAdditional_3());
-        $value = '';
+        $this->assertEmpty($this->address->getAdditional_3());
+
+        $value = 'add #3';
         $updated = $this->address->setAdditional_3($value);
         $this->assertNotSame($this->address, $updated);
         $this->assertSame($value, $updated->getAdditional_3());
-        $this->assertSame($this->additional_3, $this->address->getAdditional_3());
     }
 
     public function testJsonSerialize(): void
@@ -208,7 +202,7 @@ class AddressTest extends TestCase
     public function testToString(): void
     {
         $this->assertSame(
-            'RU, 127427, Moscow, Moscow, Academika Koroleva street, 12, office 2, 3/1, 555, add #1, add #2, add #3',
+            'RU, 127427, Moscow, Moscow, Academika Koroleva street, 12, office 2, 3/1, 555',
             (string)$this->address
         );
     }

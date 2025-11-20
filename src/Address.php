@@ -31,8 +31,11 @@ class Address implements JsonSerializable
     private ?string $countryCode = null;
 
     private ?Location $location = null;
+
     private string $additional_1 = '';
+
     private string $additional_2 = '';
+
     private string $additional_3 = '';
 
     /**
@@ -47,10 +50,7 @@ class Address implements JsonSerializable
         string   $apartment = '',
         string   $postcode = '',
         string   $countryCode = null,
-        Location $location = null,
-        string   $additional_1 = '',
-        string   $additional_2 = '',
-        string   $additional_3 = ''
+        Location $location = null
     )
     {
         $this->postcode = $postcode;
@@ -64,10 +64,6 @@ class Address implements JsonSerializable
         $this->guardCountryCode($countryCode);
         $this->countryCode = $countryCode;
         $this->location = $location;
-
-        $this->additional_1 = $additional_1;
-        $this->additional_2 = $additional_2;
-        $this->additional_3 = $additional_3;
     }
 
     public function getPostcode(): string
@@ -245,7 +241,7 @@ class Address implements JsonSerializable
             return '';
         }
 
-        return implode(', ', $fields);
+        return implode(', ', $nonEmptyFields);
     }
 
     public function jsonSerialize(): array
