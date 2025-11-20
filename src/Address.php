@@ -31,10 +31,9 @@ class Address implements JsonSerializable
     private ?string $countryCode = null;
 
     private ?Location $location = null;
-    private string $additional1 = '';
-    private string $additional2 = '';
-    private string $additional3 = '';
-    private string $additional4 = '';
+    private string $additional_1 = '';
+    private string $additional_2 = '';
+    private string $additional_3 = '';
 
     /**
      * @throws InvalidAddressCountryException
@@ -49,10 +48,9 @@ class Address implements JsonSerializable
         string   $postcode = '',
         string   $countryCode = null,
         Location $location = null,
-        string   $additional1 = '',
-        string   $additional2 = '',
-        string   $additional3 = '',
-        string   $additional4 = ''
+        string   $additional_1 = '',
+        string   $additional_2 = '',
+        string   $additional_3 = ''
     )
     {
         $this->postcode = $postcode;
@@ -67,10 +65,9 @@ class Address implements JsonSerializable
         $this->countryCode = $countryCode;
         $this->location = $location;
 
-        $this->additional1 = $additional1;
-        $this->additional2 = $additional2;
-        $this->additional3 = $additional3;
-        $this->additional4 = $additional4;
+        $this->additional_1 = $additional_1;
+        $this->additional_2 = $additional_2;
+        $this->additional_3 = $additional_3;
     }
 
     public function getPostcode(): string
@@ -192,51 +189,39 @@ class Address implements JsonSerializable
         return $clone;
     }
 
-    public function getAdditional1(): string
+    public function getAdditional_1(): string
     {
-        return $this->additional1;
+        return $this->additional_1;
     }
 
-    public function setAdditional1(string $additional1): self
+    public function setAdditional_1(string $additional_1): self
     {
         $clone = clone $this;
-        $clone->additional1 = $additional1;
+        $clone->additional_1 = $additional_1;
         return $clone;
     }
 
-    public function getAdditional2(): string
+    public function getAdditional_2(): string
     {
-        return $this->additional2;
+        return $this->additional_2;
     }
 
-    public function setAdditional2(string $additional2): self
+    public function setAdditional_2(string $additional_2): self
     {
         $clone = clone $this;
-        $clone->additional2 = $additional2;
+        $clone->additional_2 = $additional_2;
         return $clone;
     }
 
-    public function getAdditional3(): string
+    public function getAdditional_3(): string
     {
-        return $this->additional3;
+        return $this->additional_3;
     }
 
-    public function setAdditional3(string $additional3): self
+    public function setAdditional_3(string $additional_3): self
     {
         $clone = clone $this;
-        $clone->additional3 = $additional3;
-        return $clone;
-    }
-
-    public function getAdditional4(): string
-    {
-        return $this->additional4;
-    }
-
-    public function setAdditional4(string $additional4): self
-    {
-        $clone = clone $this;
-        $clone->additional4 = $additional4;
+        $clone->additional_3 = $additional_3;
         return $clone;
     }
 
@@ -251,10 +236,9 @@ class Address implements JsonSerializable
             $this->address_2,
             $this->building,
             $this->apartment,
-            $this->additional1,
-            $this->additional2,
-            $this->additional3,
-            $this->additional4,
+            $this->additional_1,
+            $this->additional_2,
+            $this->additional_3,
         ];
         $nonEmptyFields = array_filter($fields);
         if (empty($nonEmptyFields)) {
@@ -276,10 +260,9 @@ class Address implements JsonSerializable
             'apartment' => $this->apartment,
             'countryCode' => $this->countryCode,
             'location' => $this->location,
-            'additional1' => $this->additional1,
-            'additional2' => $this->additional2,
-            'additional3' => $this->additional3,
-            'additional4' => $this->additional4,
+            'additional_1' => $this->additional_1,
+            'additional_2' => $this->additional_2,
+            'additional_3' => $this->additional_3,
         ];
     }
 
