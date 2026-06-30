@@ -49,8 +49,8 @@ class Address implements JsonSerializable
         string   $building = '',
         string   $apartment = '',
         string   $postcode = '',
-        string   $countryCode = null,
-        Location $location = null
+        ?string   $countryCode = null,
+        ?Location $location = null
     )
     {
         $this->postcode = $postcode;

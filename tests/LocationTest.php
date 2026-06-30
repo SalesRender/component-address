@@ -9,6 +9,7 @@ namespace SalesRender\Components\Address;
 
 use SalesRender\Components\Address\Exceptions\InvalidLocationLatitudeException;
 use SalesRender\Components\Address\Exceptions\InvalidLocationLongitudeException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class LocationTest extends TestCase
@@ -26,7 +27,7 @@ class LocationTest extends TestCase
         $this->location = new Location($this->latitude, $this->longitude);
     }
 
-    public function invalidDataProvider(): array
+    public static function invalidDataProvider(): array
     {
         return [
             [-90.1, 45, InvalidLocationLatitudeException::class],
@@ -36,15 +37,7 @@ class LocationTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider invalidDataProvider
-     * @param float $lat
-     * @param float $lon
-     * @param string $exception
-     * @return void
-     * @throws InvalidLocationLatitudeException
-     * @throws InvalidLocationLongitudeException
-     */
+    #[DataProvider('invalidDataProvider')]
     public function testConstructWithInvalidData(float $lat, float $lon, string $exception): void
     {
         $this->expectException($exception);
